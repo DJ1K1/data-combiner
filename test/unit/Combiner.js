@@ -28,6 +28,10 @@ describe('Combiner', function () {
                 users: {
                     a: {id: 'a', login: 'aaa'},
                     b: {id: 'b', login: 'bbb'}
+                },
+                counts: {
+                    1: 2,
+                    3: 4
                 }
             }
         };
@@ -42,9 +46,24 @@ describe('Combiner', function () {
             combine: {
                 posts: {
                     for: 'result',
-                    key: 'userId',
-                    dict: 'metadata.users',
-                    to: 'user'
+                    pipeline: [
+                        {
+                            $add: {
+                                byKey: 'userId',
+                                fromDict: 'metadata.users',
+                                to: 'user'
+                            }
+                        },
+                        {
+                            $add: {
+                                byKey: 'id',
+                                fromDict: 'metadata.counts',
+                                to: 'count',
+                                default: 0
+                            }
+                        }
+                    ]
+
                 }
             }
         };
@@ -61,17 +80,20 @@ describe('Combiner', function () {
                 {
                     id: 1,
                     userId: 'a',
-                    user: {id: 'a', login: 'aaa'}
+                    user: {id: 'a', login: 'aaa'},
+                    count: 2
                 },
                 {
                     id: 2,
                     userId: 'b',
-                    user: {id: 'b', login: 'bbb'}
+                    user: {id: 'b', login: 'bbb'},
+                    count: 0
                 },
                 {
                     id: 3,
                     userId: 'c',
-                    user: null
+                    user: null,
+                    count: 4
                 }
             ]
         };

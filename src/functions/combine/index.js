@@ -1,6 +1,8 @@
 var _get = require('lodash/get');
 var _set = require('lodash/set');
 
+var processPipeline = require('./processPipeline');
+
 var combineStep = function (toName, step, data, result) {
     result[toName] = [];
 
@@ -10,20 +12,12 @@ var combineStep = function (toName, step, data, result) {
         return;
     }
 
-    var dict = _get(data, step.dict, null);
-
-    if (!dict || typeof dict !== 'object') {
-        dict = {};
-    }
-
     var defaultStepValue = _get(step, 'default', null);
 
     for (var index in forData) {
         var item = forData[index];
 
-        var dictKey = _get(item, step.key, null);
-
-        _set(item, step.to, _get(dict, dictKey, defaultStepValue));
+        processPipeline(step, item, data);
 
         result[toName].push(item);
     }

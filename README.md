@@ -26,6 +26,10 @@ var data = {
         users: {
             1: {id: 1, login: '111'},
             2: {id: 2, login: '222'}
+        },
+        count: {
+            a: 1,
+            c: 3
         }
     },
     result: [
@@ -52,10 +56,25 @@ var schema = {
         // TODO
         posts: {
             for: 'result',
-            key: 'userId',
-            dict: 'metadata.users',
-            to: 'users',
-            default: null
+            pipeline: [
+                {
+                    $add: {
+                        byKey: 'userId',
+                        fromDict: 'metadata.users',
+                        to: 'user',
+                        default: null
+                    }
+                },
+                {
+                    $add: {
+                        byKey: 'id',
+                        fromDict: 'metadata.counts',
+                        to: 'count',
+                        default: 0
+                    }
+                }
+            ]
+
         }
     }
 };
@@ -80,9 +99,9 @@ var result = c.combine(data);
         count: 1
     },
     posts: [
-        {id: 'a', userId: 1, text: 'aaa', user: {id: 1, login: '111'}},
-        {id: 'b', userId: 2, text: 'bbb', user: {id: 2, login: '222'}},
-        {id: 'c', userId: 3, text: 'ccc', user: null}
+        {id: 'a', userId: 1, text: 'aaa', user: {id: 1, login: '111'}, count: 1},
+        {id: 'b', userId: 2, text: 'bbb', user: {id: 2, login: '222'}, count: 0},
+        {id: 'c', userId: 3, text: 'ccc', user: null, count: 3}
     ]
 }
 ```

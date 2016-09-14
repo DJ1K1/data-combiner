@@ -11,14 +11,34 @@ describe('combine function', function () {
         assert.deepEqual(combine(schema, {}, {a: 1}), {a:1});
     });
 
+    // it('should return empty array if no pipeline', function () {
+    //
+    //     var schema = {
+    //         posts: {
+    //             for: 'result',
+    //             pipeline: null
+    //         }
+    //     };
+    //
+    //     var result = combine(schema, {}, {});
+    //
+    //     assert.deepEqual(result, {posts: []});
+    // });
+
     it('should combine, one step, one.level', function () {
 
         var schema = {
             posts: {
                 for: 'result',
-                key: 'userId',
-                dict: 'users',
-                to: 'user'
+                pipeline: [
+                    {
+                        '$add': {
+                            byKey: 'userId',
+                            fromDict: 'users',
+                            to: 'user'
+                        }
+                    }
+                ]
             }
         };
 
@@ -62,9 +82,15 @@ describe('combine function', function () {
         var schema = {
             posts: {
                 for: 'result',
-                key: 'userId',
-                dict: 'users',
-                to: 'user'
+                pipeline: [
+                    {
+                        '$add': {
+                            byKey: 'userId',
+                            fromDict: 'users',
+                            to: 'user'
+                        }
+                    }
+                ]
             }
         };
 
@@ -85,9 +111,15 @@ describe('combine function', function () {
         var schema = {
             posts: {
                 for: 'result',
-                key: 'userId',
-                dict: 'users',
-                to: 'user'
+                pipeline: [
+                    {
+                        '$add': {
+                            byKey: 'userId',
+                            fromDict: 'users',
+                            to: 'user'
+                        }
+                    }
+                ]
             }
         };
 
