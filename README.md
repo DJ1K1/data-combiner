@@ -1,9 +1,7 @@
 # data-combiner
 
 [![Code Climate](https://codeclimate.com/github/alekzonder/data-combiner/badges/gpa.svg)](https://codeclimate.com/github/alekzonder/data-combiner)
-
 [![Test Coverage](https://codeclimate.com/github/alekzonder/data-combiner/badges/coverage.svg)](https://codeclimate.com/github/alekzonder/data-combiner/coverage)
-
 [![Build Status](https://travis-ci.org/alekzonder/data-combiner.svg?branch=master)](https://travis-ci.org/alekzonder/data-combiner)
 
 
