@@ -1,0 +1,41 @@
+{
+    "name": "data-combiner",
+    "version": "0.0.0",
+    "description": "combine object to object by schema",
+    "main": "index.js",
+    "files": ["src", "index.js"],
+    "scripts": {
+        "docs": "./node_modules/.bin/jsdoc ./ -c ./.jsdoc.json --verbose --readme ./README.md && open ./docs/index.html",
+        "tests": "./node_modules/.bin/mocha ./test/index.js",
+        "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./test/index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alekzonder/data-combiner.git"
+    },
+    "keywords": [
+        "data",
+        "object",
+        "combine"
+    ],
+    "author": "alekzonder <alekzonder@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/alekzonder/data-combiner/issues"
+    },
+    "homepage": "https://github.com/alekzonder/data-combiner#readme",
+    "dependencies": {
+        "lodash": "^4.15.0"
+    },
+    "devDependencies": {
+        "chai": "3.5.0",
+        "chai-json-schema": "git+https://github.com/chaijs/chai-json-schema.git",
+        "codeclimate-test-reporter": "^0.3.3",
+        "docdash": "^0.4.0",
+        "istanbul": "^0.4.4",
+        "jsdoc": "^3.4.0",
+        "log4js-nested": "^0.1.3",
+        "minami": "^1.1.1",
+        "mocha": "^2.4.5"
+    }
+}
