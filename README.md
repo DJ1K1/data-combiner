@@ -102,6 +102,14 @@ var schema = {
     }
 };
 
+// create combiner item
+
+var Combiner = require('data-combiner');
+
+var combiner = new Combiner(schema);
+
+var resultWhatYouWant = combiner.combine(raw);
+
 ```
 
 # LICENSE
