@@ -8,6 +8,7 @@
 combine object to object by schema
 
 
+
 # install
 
 ```
@@ -16,94 +17,91 @@ npm i --save data-combiner@latest
 
 # usage
 
-## data
 ```js
-var data = {
+
+// for example, your user posts api response seems like this
+var raw = {
+
+    // set of count for pagination
     metadata: {
-        resultset: {
-            count: 1
-        },
-        users: {
-            1: {id: 1, login: '111'},
-            2: {id: 2, login: '222'}
-        },
-        count: {
-            a: 1,
-            c: 3
-        }
+        resultset: {count: 3, total: 10, limit: 2, offset: 0}
     },
+
+    // user profiles
+    users: {
+        'u1': {id: 1, login: 'A User'},
+        'u2': {id: 1, login: 'B User'},
+    },
+
+    // count of likes per post
+    likeCounts: {
+        1: 3,
+        2: 4
+    },
+
+    // array with posts
     result: [
-        {id: 'a', userId: 1, text: 'aaa'},
-        {id: 'b', userId: 2, text: 'bbb'},
-        {id: 'c', userId: 3, text: 'ccc'}
+        {id: 1, userId: 'u1', text: 'a'},
+        {id: 2, userId: 'u2', text: 'b'}
     ]
 };
-```
 
-## schema
+// in browser (or in node.js service) you want work with this object
+var result = {
+    resultset: {count: 3, total: 10, limit: 2, offset: 0},
+    posts: [
+        {id: 1, userId: 'u1', text: 'a', user: {id: 'u1', login: 'A User'}, stars: 3},
+        {id: 2, userId: 'u2', text: 'b', user: {id: 'u2', login: 'A User'}, stars: 4}
+    ]
+};
 
-```js
+// write schema
 var schema = {
+
+    // map object to new keys
     map: [
-        // map "metadata.resultset" from data to result "resultset" key, if not exists set null
-        {
-            from: 'metadata.resultset',
-            to: 'resultset',
-            default: null
-        }
+        // map metadata.resultset to resultset
+        {from: 'metadata.resultset', to: 'resultset'}
     ],
+
+    // combine new posts object with dicts (users and likeCounts)
     combine: {
-        // TODO
+        // map posts to new object
         posts: {
-            for: 'result',
+            // for array in 'result' key
+            from: 'result',
+
+            // for each item do this steps
             pipeline: [
                 {
+                    // add into item 'user' object by key userId
+                    // from 'users' dict
                     $add: {
                         byKey: 'userId',
-                        fromDict: 'metadata.users',
-                        to: 'user',
-                        default: null
+                        fromDict: 'users',
+                        to: 'user'
+
+                        // if not userId not exists in users - default = null
                     }
+
                 },
+
+                // same for likes count
                 {
                     $add: {
                         byKey: 'id',
-                        fromDict: 'metadata.counts',
-                        to: 'count',
+                        fromDict: 'likeCounts',
+                        to: 'stars',
+
+                        // set your custom default value
                         default: 0
                     }
                 }
             ]
-
         }
     }
 };
-```
 
-## combine
-
-```js
-var Combiner = require('data-combiner');
-
-var c = new Combiner(schema);
-
-var result = c.combine(data);
-
-```
-
-## result
-
-```js
-{
-    resultset: {
-        count: 1
-    },
-    posts: [
-        {id: 'a', userId: 1, text: 'aaa', user: {id: 1, login: '111'}, count: 1},
-        {id: 'b', userId: 2, text: 'bbb', user: {id: 2, login: '222'}, count: 0},
-        {id: 'c', userId: 3, text: 'ccc', user: null, count: 3}
-    ]
-}
 ```
 
 # LICENSE
