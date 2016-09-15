@@ -81,7 +81,7 @@ var schema = {
                         fromDict: 'users',
                         to: 'user'
 
-                        // if not userId not exists in users - default = null
+                        // if userId not exists in users - default = null
                     }
 
                 },
