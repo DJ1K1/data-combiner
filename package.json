@@ -1,6 +1,6 @@
 {
   "name": "data-combiner",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "combine object to object by schema",
   "main": "index.js",
   "files": [
