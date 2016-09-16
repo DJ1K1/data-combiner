@@ -13,16 +13,13 @@
 var _get = require('lodash/get');
 var _set = require('lodash/set');
 
-var steps = {};
+var steps = {
+    add: require('./steps/add'),
+    remove: require('./steps/remove')
+};
 
 var getStepFunction = function (name) {
-
-    if (!steps[name]) {
-        steps[name] = require('./steps/' + name);
-    }
-
     return steps[name];
-
 };
 
 var processStep = function (step, data, item) {
