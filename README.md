@@ -18,9 +18,8 @@ npm i --save data-combiner@latest
 # usage
 
 ```js
-
 // for example, your user posts api response seems like this
-var raw = {
+var data = {
 
     // set of count for pagination
     metadata: {
@@ -28,16 +27,16 @@ var raw = {
     },
 
     // user profiles
-    users: {
-        'u1': {id: 1, login: 'A User'},
-        'u2': {id: 1, login: 'B User'},
-    },
+    users: [
+        {id: 'u1', login: 'A User'},
+        {id: 'u2', login: 'B User'},
+    ],
 
     // count of likes per post
-    likeCounts: {
-        1: 3,
-        2: 4
-    },
+    likeCounts: [
+        {id: 1, count: 3},
+        {id: 2, count: 4}
+    ],
 
     // array with posts
     result: [
@@ -56,61 +55,138 @@ var result = {
 };
 
 // write schema
-var schema = {
+var schema = [
 
-    // map object to new keys
-    map: [
-        // map metadata.resultset to resultset
-        {from: 'metadata.resultset', to: 'resultset'}
-    ],
+    // transform array to object in data original object
+    ['dataArrayToObject', {from: 'users', to: 'users', byKey: 'id'}],
+    ['dataArrayToObject', {from: 'likeCounts', to: 'likeCounts', byKey: 'id'}],
+
+    // map resultset to result object
+    ['map', {from: 'metadata.resultset', to: 'resultset'}],
 
     // combine new posts object with dicts (users and likeCounts)
-    combine: {
-        // map posts to new object
-        posts: {
-            // for array in 'result' key
-            from: 'result',
+    ['combine', {
+        for: 'result',
+        each: [
+            ['add', {byKey: 'userId', fromObject: 'users', to: 'user'}],
+            ['add', {byKey: 'id', fromObject: 'likeCounts', get: 'count', to: 'stars'}],
+        ],
+        to: 'posts'
+    }]
 
-            // for each item do this steps
-            pipeline: [
-                {
-                    // add into item 'user' object by key userId
-                    // from 'users' dict
-                    $add: {
-                        byKey: 'userId',
-                        fromDict: 'users',
-                        to: 'user'
-
-                        // if userId not exists in users - default = null
-                    }
-
-                },
-
-                // same for likes count
-                {
-                    $add: {
-                        byKey: 'id',
-                        fromDict: 'likeCounts',
-                        to: 'stars',
-
-                        // set your custom default value
-                        default: 0
-                    }
-                }
-            ]
-        }
-    }
-};
+];
 
 // create combiner item
 
-var Combiner = require('data-combiner');
+var combine = require('data-combiner');
 
-var combiner = new Combiner(schema);
+var resultWhatYouWant = combine(schema, data);
 
-var resultWhatYouWant = combiner.combine(raw);
+// simple you can create combine function and combine your object without passing schema
+
+var createCombine = require('data-combiner/create');
+
+var myCombine = createCombine(schema);
+
+var resultWhatYouWant = myCombine(data);
 
 ```
+
+
+# documentation
+
+schema is `Array`
+
+And every array element is array in format: `[<name of step>, <step config>]`
+
+# steps
+
+## map
+
+copy object from data object by key *from* to result object key *to*
+
+### format
+
+```js
+[
+	'map',
+	{
+		'from': '<data key>',
+		'to': '<result key>',
+		'default': '<default value>'
+	}
+]
+```
+
+## arrayToObject
+
+convert array to object using lodash function _.keyBy
+
+### format
+
+```js
+[
+	'arrayToObject',
+	{
+		'from': '<data key>',
+		'to': '<result key>',
+		'byKey': '<key in data array item>',
+		'default': '<default value>'
+	}
+]
+```
+
+## dataArrayToObject
+
+same as arrayToObject, but do it from data object to data object
+
+### format
+
+```js
+[
+	'arrayToObject',
+	{
+		'from': '<data key>',
+		'to': '<data key>',
+		'byKey': '<key in data array item>',
+		'default': '<default value>'
+	}
+]
+```
+
+
+## combine
+
+### format
+
+```js
+[
+	'combine',
+	{
+		'for': '<key in data, value should be array>',
+
+		// for each item of "for" value
+		'each': [
+
+			[
+				'add',
+				{
+					'byKey': '<dict object id>',
+					'fromObject': '<data object key>',
+					'to': 'key in new item>',
+					'default': '<default value>'
+				}
+			],
+
+			['remove', '<array of keys will be removed from item>']
+		],
+
+
+		to: '<key in result for save new combined array>'
+	}
+]
+```
+
 
 # LICENSE
 

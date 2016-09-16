@@ -1,1 +1,1 @@
-module.exports = require(__dirname + '/src/Combiner');
+module.exports = require(__dirname + '/src/combine.index.js');

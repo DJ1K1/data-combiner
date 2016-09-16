@@ -5,6 +5,7 @@
   "main": "index.js",
   "files": [
     "src",
+    "create.js",
     "index.js"
   ],
   "scripts": {
