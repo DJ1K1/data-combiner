@@ -1,12 +1,11 @@
 var validateSchema = require('./validation/basicSchemaValidation');
 var validateStep = require('./validation/basicStepValidation');
 
-var steps = {
-    map: require('./steps/map'),
-    arrayToObject: require('./steps/arrayToObject'),
-    dataArrayToObject: require('./steps/dataArrayToObject'),
-    combine: require('./steps/combine')
-};
+var steps = {};
+steps.map = require('./steps/map');
+steps.arrayToObject = require('./steps/arrayToObject');
+steps.dataArrayToObject = require('./steps/dataArrayToObject');
+steps.combine = require('./steps/combine');
 
 var getStepFunction = function (name) {
     return steps[name];
