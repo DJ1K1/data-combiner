@@ -4,6 +4,7 @@
 [![Test Coverage](https://codeclimate.com/github/alekzonder/data-combiner/badges/coverage.svg)](https://codeclimate.com/github/alekzonder/data-combiner/coverage)
 [![Build Status](https://travis-ci.org/alekzonder/data-combiner.svg?branch=master)](https://travis-ci.org/alekzonder/data-combiner)
 
+[![NPM](https://nodei.co/npm/data-combiner.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/data-combiner/)
 
 combine object to object by schema
 
