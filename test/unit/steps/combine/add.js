@@ -27,7 +27,7 @@ describe('#add', function () {
 
         var result = {};
 
-        var result = combine(schema, data, result);
+        combine(schema, data, result);
 
         var valid = {
             test: [
@@ -66,7 +66,7 @@ describe('#add', function () {
 
         var result = {};
 
-        var result = combine(schema, data, result);
+        combine(schema, data, result);
 
         var valid = {
             test: [
@@ -96,7 +96,7 @@ describe('#add', function () {
 
         var result = {};
 
-        var result = combine(schema, data, result);
+        combine(schema, data, result);
 
         var valid = {
             test: [
@@ -128,7 +128,7 @@ describe('#add', function () {
 
         var result = {};
 
-        var result = combine(schema, data, result);
+        combine(schema, data, result);
 
         var valid = {
             test: [
@@ -162,7 +162,7 @@ describe('#add', function () {
 
         var result = {};
 
-        var result = combine(schema, data, result);
+        combine(schema, data, result);
 
         var valid = {
             test: [

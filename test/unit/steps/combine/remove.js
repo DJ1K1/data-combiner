@@ -26,7 +26,7 @@ describe('#remove', function () {
 
         var result = {};
 
-        var result = combine(schema, data, result);
+        combine(schema, data, result);
 
         var valid = {
             test: [
@@ -61,7 +61,7 @@ describe('#remove', function () {
 
         var result = {};
 
-        var result = combine(schema, data, result);
+        combine(schema, data, result);
 
         var valid = {
             test: [
@@ -96,7 +96,7 @@ describe('#remove', function () {
 
         var result = {};
 
-        var result = combine(schema, data, result);
+        combine(schema, data, result);
 
         var valid = {
             test: [
