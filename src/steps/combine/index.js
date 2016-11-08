@@ -18,6 +18,14 @@ var steps = {};
 steps.add = require('./steps/add');
 steps.remove = require('./steps/remove');
 
+var checkConfig = function (config) {
+    if (!config || !config.for || !config.each || !config.to || !Array.isArray(config.each)) {
+        var error = new Error('invalid config fo step "combine"');
+        error.config = config;
+        throw error;
+    }
+};
+
 var getStepFunction = function (name) {
     return steps[name];
 };
@@ -28,11 +36,7 @@ var processStep = function (step, data, item) {
 
 module.exports = function(config, data, result) {
 
-    if (!config || !config.for || !config.each || !config.to || !Array.isArray(config.each)) {
-        var error = new Error('invalid config fo step "combine"');
-        error.config = config;
-        throw error;
-    }
+    checkConfig(config);
 
     var forData = _get(data, config.for, []);
 
