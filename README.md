@@ -2,6 +2,8 @@
 
 [![Code Climate](https://codeclimate.com/github/alekzonder/data-combiner/badges/gpa.svg)](https://codeclimate.com/github/alekzonder/data-combiner)
 [![Test Coverage](https://codeclimate.com/github/alekzonder/data-combiner/badges/coverage.svg)](https://codeclimate.com/github/alekzonder/data-combiner/coverage)
+[![bitHound Code](https://www.bithound.io/github/alekzonder/data-combiner/badges/code.svg)](https://www.bithound.io/github/alekzonder/data-combiner)
+[![bitHound Dependencies](https://www.bithound.io/github/alekzonder/data-combiner/badges/dependencies.svg)](https://www.bithound.io/github/alekzonder/data-combiner/master/dependencies/npm)
 [![Build Status](https://travis-ci.org/alekzonder/data-combiner.svg?branch=master)](https://travis-ci.org/alekzonder/data-combiner)
 
 [![NPM](https://nodei.co/npm/data-combiner.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/data-combiner/)
