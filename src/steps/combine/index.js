@@ -13,10 +13,10 @@
 var _get = require('lodash/get');
 var _set = require('lodash/set');
 
-var steps = {
-    add: require('./steps/add'),
-    remove: require('./steps/remove')
-};
+var steps = {};
+
+steps.add = require('./steps/add');
+steps.remove = require('./steps/remove');
 
 var getStepFunction = function (name) {
     return steps[name];
@@ -27,6 +27,7 @@ var processStep = function (step, data, item) {
 };
 
 module.exports = function(config, data, result) {
+
     if (!config || !config.for || !config.each || !config.to || !Array.isArray(config.each)) {
         var error = new Error('invalid config fo step "combine"');
         error.config = config;
